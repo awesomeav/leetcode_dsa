@@ -1,0 +1,43 @@
+/**
+ * @param {string} s
+ * @param {number} k
+ * @returns {number}
+ */
+class Solution {
+    longestKSubstr(s, k) {
+        // code here
+        
+        let i=0; let j=0;
+        const map=new Map();
+        let maxLen=-1
+        while(j<s.length){
+            
+            // add in map;
+            map.set(s[j],(map.get(s[j])||0 ) +1 ) // map [a:4,b:4,...]
+            
+            // condition to remove the windows;
+            // if reach over the mapsize
+            while(map.size>k){
+                // aabacb
+                map.set(s[i],map.get(s[i])-1 );
+                
+                if(map.get(s[i])==0  ){
+                    map.delete(s[i]);
+                }
+                
+                i++;   
+            }
+            
+            
+            // if windows reach
+            if(map.size==k){
+                maxLen=Math.max(maxLen,j-i+1);
+            }
+            
+            j++
+        }
+        
+        return maxLen
+    }
+}
+
